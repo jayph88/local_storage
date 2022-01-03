@@ -12,6 +12,7 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   int settingColor = 0xff2196f3;
+  List<int>  listTextSize = [10,12, 16, 18, 20];
   List<int> listSettingColor = [
     0xff2196f3,
     0xff9c27b0,
@@ -46,6 +47,8 @@ class _SettingsState extends State<Settings> {
     super.initState();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     Widget getColorbox(int color) {
@@ -63,28 +66,22 @@ class _SettingsState extends State<Settings> {
       );
     }
 
-    ;
 
-    return StreamBuilder<SettingsModel>(
-        stream: bloc.settingsStream,
-        // initialData: 0xff2196f3,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Scaffold(
+
+    return Scaffold(
                 appBar: AppBar(
-                  title: Text('Settings', style: TextStyle(fontSize:snapshot.data!.size.toDouble() ),),
-                  backgroundColor: Color(snapshot.data!.color),
+                  title: Text('Settings'),
                 ),
                 body: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text("Text Size"),
                     DropdownButton(
-                      value: snapshot.data!.size,
+                      value: 16,
                       onChanged: (int? value) {
                         bloc.addSize(value!);
                       },
-                        items: snapshot.data!.listTextSize
+                        items: listTextSize
                             .map((e) => DropdownMenuItem<int>(
                                   child: Text(e.toString()),
                                   value: e,
@@ -97,35 +94,9 @@ class _SettingsState extends State<Settings> {
                             .map((color) => getColorbox(color))
                             .toList()),
                   ],
-                ));
-          } else {
-            return Scaffold(
-              appBar: AppBar(
-                title: Text("waiting"),
-              ),
+                )
             );
-          }
-        });
-  }
+
 }
 
-class ColorBox extends StatelessWidget {
-  final int color;
-  final ValueSetter<int> _onTap;
-
-  const ColorBox(this.color, this._onTap, {Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => _onTap(color),
-      child: Container(
-        height: 70,
-        width: 70,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(5)),
-            color: Color(color)),
-      ),
-    );
-  }
 }

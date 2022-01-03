@@ -14,7 +14,16 @@ class App extends StatelessWidget {
       stream: bloc.settingsStream,
       builder: (context, snapshot) {
         return MaterialApp(
-          theme: ThemeData(textTheme: TextTheme(bodyText2: TextStyle(fontSize: snapshot.hasData ? snapshot.data!.size.toDouble(): 16.toDouble()))),
+          theme: ThemeData(
+              textTheme: TextTheme(bodyText2: TextStyle(fontSize: snapshot.hasData ? snapshot.data!.size.toDouble(): 16.toDouble())),
+               // primaryColor: Color(snapshot.hasData ? snapshot.data!.color : 0xff2196f3  ),
+              appBarTheme: AppBarTheme(
+              color:  Color(snapshot.hasData ? snapshot.data!.color : 0xff2196f3 ),
+                  // listTileTheme: ListTileThemeData(),
+
+              )
+
+          ),
           routes: {
             "/" : (BuildContext context) => Settings(),
           },
