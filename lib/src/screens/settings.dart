@@ -22,7 +22,7 @@ class _SettingsState extends State<Settings> {
   ];
 
   // SPSettings sp = SPSettings();
-  SettingsBloc bloc = SettingsBloc();
+  late SettingsBloc bloc ;
 
   // void setColor(int color){
   //   setState(() {
@@ -31,11 +31,19 @@ class _SettingsState extends State<Settings> {
   //   });
   // }
 
-  @override
-  void dispose() {
-    bloc.dispose();
-    super.dispose();
-  }
+
+  // @override
+  // void didUpdateWidget(var oldWidget) {
+  //   print("updated widgent settings");
+  //   super.didUpdateWidget(oldWidget);
+  // }
+
+  // @override
+  // void dispose() {
+  //   print("closed streaming");
+  //   bloc.dispose();
+  //   super.dispose();
+  // }
 
   @override
   void initState() {
@@ -44,6 +52,8 @@ class _SettingsState extends State<Settings> {
     //     settingColor = sp.getSPColor();
     //   });
     // });
+
+    bloc = SettingsBloc();
     super.initState();
   }
 
