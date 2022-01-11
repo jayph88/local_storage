@@ -12,7 +12,7 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   int settingColor = 0xff2196f3;
-  List<int>  listTextSize = [10,12, 16, 18, 20];
+  final List<int>  listTextSize = [10,14, 16, 22, 25];
   List<int> listSettingColor = [
     0xff2196f3,
     0xff9c27b0,
@@ -20,6 +20,7 @@ class _SettingsState extends State<Settings> {
     0xff00bcd4,
     0xff4caf50
   ];
+  int textSize = 16 ;
 
   // SPSettings sp = SPSettings();
   late SettingsBloc bloc ;
@@ -61,6 +62,7 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
+
     Widget getColorbox(int color) {
       return GestureDetector(
         onTap: () {
@@ -87,13 +89,16 @@ class _SettingsState extends State<Settings> {
                   children: [
                     Text("Text Size"),
                     DropdownButton(
-                      value: 16,
-                      onChanged: (int? value) {
-                        bloc.addSize(value!);
+                      value: textSize,
+                      onChanged: (int? newValue) {
+                        setState(() {
+                          textSize = newValue!;
+                          bloc.addSize(newValue);
+                        });
                       },
                         items: listTextSize
                             .map((e) => DropdownMenuItem<int>(
-                                  child: Text(e.toString()),
+                                  child: Text(e.toString(), style: TextStyle(fontSize: textSize.toDouble())),
                                   value: e,
                                   )
                         ).toList()),

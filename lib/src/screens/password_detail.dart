@@ -6,7 +6,8 @@ import 'package:local_storage/src/models/password_model.dart';
 class PasswordDetail extends StatefulWidget {
   final Password password;
   final bool isNew ;
-  const PasswordDetail(this.password, this.isNew, {Key? key}) : super(key: key);
+   bool isEdit;
+  PasswordDetail(this.password, this.isNew,  {this.isEdit=false,Key? key}) : super(key: key);
 
   @override
   State<PasswordDetail> createState() => _PasswordDetailState();
@@ -26,12 +27,14 @@ class _PasswordDetailState extends State<PasswordDetail> {
       content: Column(
         children: [
             TextField(
+              style: Theme.of(context).textTheme.bodyText2,
               controller: nameTxtController,
               decoration: InputDecoration(
                 hintText: "Description"
               ),
             ),
           TextField(
+            style: Theme.of(context).textTheme.bodyText2,
             controller: passwordTxtController,
             obscureText: obscureText,
             decoration: InputDecoration(
@@ -49,7 +52,7 @@ class _PasswordDetailState extends State<PasswordDetail> {
         ],
       ),
       actions: [
-        TextButton(onPressed: (){
+        widget.isEdit ? TextButton(onPressed: (){
           widget.password.name = nameTxtController.text;
           widget.password.password = passwordTxtController.text;
           var db = SembastDb();
@@ -63,7 +66,9 @@ class _PasswordDetailState extends State<PasswordDetail> {
           Navigator.pop(context);
           Navigator.pushNamed(context, "/passwords");
 
-        }, child: Text("Save")),
+        },
+            child: Text("Save")
+        ) :  SizedBox.shrink(),
         TextButton(onPressed: () => Navigator.pop(context), child: Text("Cancel"))
       ],
     );

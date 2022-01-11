@@ -26,7 +26,14 @@ class _PasswordsScreenState extends State<PasswordsScreen> {
   Widget build(BuildContext context) {
     allPasswords =  db.getPasswords();
     return Scaffold(
-      appBar: AppBar(title: Text("Passwords"),),
+      appBar: AppBar(title: Text("Passwords"),
+      actions: [
+        IconButton(onPressed: (){
+          setState(() {
+
+          });
+        }, icon: Icon(Icons.refresh))
+      ],),
       body: FutureBuilder(
         future: allPasswords,
         builder: (BuildContext context, AsyncSnapshot<List<Password>> snapshot) {
@@ -40,17 +47,32 @@ class _PasswordsScreenState extends State<PasswordsScreen> {
                     onDismissed: (direction) {
                       db.deletePassword(passwords[index]);
                     },
-                    child: ListTile(
-                           title: Text(passwords[index].name),
-                      onTap: () {
-                        showDialog(context: context,
-                            builder:(context) {
-                              return PasswordDetail(
-                                  passwords[index], false
-                              );
-                            }
-                        );
-                      },
+                    child: Card(
+                      child: ListTile(
+                        // tileColor: Theme.of(context).colorScheme.onSurface,
+                             title: Text(passwords[index].name,
+                             style: Theme.of(context).textTheme.bodyText2),
+                        trailing: IconButton(icon: Icon(Icons.edit),
+                        onPressed: () {
+                      showDialog(context: context,
+                      builder:(context) {
+                      return PasswordDetail(
+                      passwords[index], false, isEdit: true,
+                      );
+                      }
+                      );
+                      },),
+                        onTap: () {
+                          showDialog(context: context,
+                              builder:(context) {
+                                return PasswordDetail(
+                                    passwords[index], false, isEdit: false,
+                                );
+                              }
+                          );
+                        },
+
+                      ),
                     )
                 );
               },
