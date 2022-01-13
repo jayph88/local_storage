@@ -5,6 +5,7 @@ import 'dart:async';
 class SPSettings {
   final String colorKey = "font_color";
   final String textSizeKey = "text_size";
+  final String isMasterSetKey = "master";
   static SPSettings? _instance;
   late SharedPreferences _sp;
   SPSettings._internal();
@@ -38,6 +39,15 @@ class SPSettings {
     int? size = _sp.getInt(textSizeKey);
     size ??= 16;
     return size;
+  }
+
+  Future setMaster() async {
+    await _sp.setBool(isMasterSetKey, true);
+  }
+
+  bool getMaster() {
+    bool? isMasterSet = _sp.getBool(isMasterSetKey);
+    return isMasterSet ?? false;
   }
 
 }

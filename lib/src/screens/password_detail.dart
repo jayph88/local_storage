@@ -52,7 +52,7 @@ class _PasswordDetailState extends State<PasswordDetail> {
         ],
       ),
       actions: [
-        widget.isEdit ? TextButton(onPressed: (){
+        widget.isEdit || widget.isNew  ? TextButton(onPressed: (){
           widget.password.name = nameTxtController.text;
           widget.password.password = passwordTxtController.text;
           var db = SembastDb();

@@ -6,6 +6,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 
+import 'encrypt_codec.dart';
+
 class SembastDb {
    late Database db;
    bool isDbInitialized = false;
@@ -30,7 +32,8 @@ class SembastDb {
     if (isDbInitialized == false) {
       final docsDir = await getApplicationDocumentsDirectory();
       final dbPath = join(docsDir.path, 'pass.db');
-      db = await databaseFactoryIo.openDatabase(dbPath);
+      var codec = getEncryptSembastCodec(password: 'mypassword');
+      db = await databaseFactoryIo.openDatabase(dbPath, codec: codec);
       isDbInitialized = true;
     }
   }
