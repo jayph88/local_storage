@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_storage/src/data/sembast_db.dart';
 import 'package:local_storage/src/models/password_model.dart';
+import 'package:local_storage/src/screens/drawer.dart';
 import 'package:local_storage/src/screens/password_detail.dart';
 
 
@@ -34,6 +35,7 @@ class _PasswordsScreenState extends State<PasswordsScreen> {
           });
         }, icon: Icon(Icons.refresh))
       ],),
+      drawer: APPDrawer(),
       body: FutureBuilder(
         future: allPasswords,
         builder: (BuildContext context, AsyncSnapshot<List<Password>> snapshot) {

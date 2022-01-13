@@ -28,11 +28,25 @@ class SembastDb {
     return _singelton;
   }
 
-  Future<void> _openDb() async {
+  Future<bool> checkMaster(String pass) async {
+    bool isCorrect=false;
+    try {
+      await openDb(pass);
+      isCorrect = true;
+    }
+    catch(err)
+    {
+     isCorrect = false;
+     print('wrong password provided');
+    }
+    return isCorrect;
+  }
+
+  Future<void> openDb(String pass) async {
     if (isDbInitialized == false) {
       final docsDir = await getApplicationDocumentsDirectory();
       final dbPath = join(docsDir.path, 'pass.db');
-      var codec = getEncryptSembastCodec(password: 'mypassword');
+      var codec = getEncryptSembastCodec(password: pass);
       db = await databaseFactoryIo.openDatabase(dbPath, codec: codec);
       isDbInitialized = true;
     }
@@ -47,7 +61,7 @@ class SembastDb {
 
   Future<List<Password>> getPasswords() async {
     print("i get called");
-    await _openDb();
+    // await _openDb();
     final finder = Finder(sortOrders: [SortOrder('name')]);
     final snapshot = await store.find(db, finder: finder);
     return snapshot.map((field) {

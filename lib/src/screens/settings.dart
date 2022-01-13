@@ -20,41 +20,18 @@ class _SettingsState extends State<Settings> {
     0xff00bcd4,
     0xff4caf50
   ];
-  int textSize = 16 ;
 
-  // SPSettings sp = SPSettings();
+  SPSettings sp = SPSettings();
+  late int textSize ;
   late SettingsBloc bloc ;
 
-  // void setColor(int color){
-  //   setState(() {
-  //     settingColor = color;
-  //     sp.setSPColor(color);
-  //   });
-  // }
 
-
-  // @override
-  // void didUpdateWidget(var oldWidget) {
-  //   print("updated widgent settings");
-  //   super.didUpdateWidget(oldWidget);
-  // }
-
-  // @override
-  // void dispose() {
-  //   print("closed streaming");
-  //   bloc.dispose();
-  //   super.dispose();
-  // }
 
   @override
   void initState() {
-    // sp.init().then((color) {
-    //   setState(() {
-    //     settingColor = sp.getSPColor();
-    //   });
-    // });
 
     bloc = SettingsBloc();
+    textSize = sp.getSPSize() ;
     super.initState();
   }
 

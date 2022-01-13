@@ -20,8 +20,10 @@ class _PasswordDetailState extends State<PasswordDetail> {
 
   @override
   Widget build(BuildContext context) {
-    nameTxtController.text = widget.password.name;
-    passwordTxtController.text = widget.password.password;
+    if (!widget.isNew) {
+      nameTxtController.text = widget.password.name;
+      passwordTxtController.text = widget.password.password;
+    }
     return AlertDialog(
       title: widget.isNew ? Text("Enter new Password") : Text("Update Password"),
       content: Column(
